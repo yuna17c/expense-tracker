@@ -141,7 +141,7 @@ function fetchItems() {
             newItemHTML += `<li data-itemindex="${i}" ${status}>
             <div class="item">$ ${itemsArr[i].item}</div>
             <div class="itemCat">${categoriesArr[i]}</div>
-            <div class="itemDelete"><img src="garbage.png"></div>
+            <div class="itemDelete"><img src="image/garbage.png"></div>
             </li>`;
         }
 
