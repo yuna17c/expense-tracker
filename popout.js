@@ -90,18 +90,33 @@ document.querySelector('.add-budget').addEventListener('click', function(){
 document.querySelector('.new-item button').addEventListener('click', function() {
     let itemName = document.querySelector('.new-item input').value;
     let category = document.querySelector('.new-item select').value;
+    let categoryStorage = localStorage.getItem('category');
+    let categoryArr = JSON.parse(categoryStorage);
+    let itemsStorage = localStorage.getItem('content');
+    let itemsArr = JSON.parse(itemsStorage);
     if (itemName != '' && !isNaN(itemName)) {
-        // add to the expense list
-        let itemsStorage = localStorage.getItem('content');
-        let itemsArr = JSON.parse(itemsStorage);
-        itemsArr.unshift({"item": itemName, "status":0});
-        saveItems(itemsArr);
-        
-        // add to the category list
-        let categoryStorage = localStorage.getItem('category');
-        let categoryArr = JSON.parse(categoryStorage);
-        categoryArr.unshift(category);
-        saveCategory(categoryArr);
+        let length = categoryArr.length
+        let exist = false
+        for (i=0; i < length; i++) {
+            if (categoryArr[i] == category) {
+                console.log(itemName)
+                console.log(itemsArr[i].item)
+                let num = parseFloat(itemsArr[i].item) + parseFloat(itemName)
+                itemsArr[i].item = num
+                console.log(itemsArr[i])
+                saveItems(itemsArr);
+                exist = true
+            }
+        };
+        if (exist == false) {
+            // add to the expense list
+            itemsArr.unshift({"item": itemName, "status":0});
+            saveItems(itemsArr);
+            
+            // add to the category list
+            categoryArr.unshift(category);
+            saveCategory(categoryArr);
+        }
         
         fetchItems();
 

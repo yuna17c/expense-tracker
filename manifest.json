@@ -1,16 +1,16 @@
 {
-    "name": "Spendix",
+    "name": "Expense tracker",
     "version": "0.1.0",
     "description": "Keep track of how much money you spend.",
     "manifest_version": 2,
     "browser_action": {
-        "default_title": "Spendix",
+        "default_title": "Expense Tracker",
         "default_popup": "popout.html"
     },
-    "background": {
-        "page": "background.html",
-        "persistent": true
-    },
+    // "background": {
+    //     "page": "background.html",
+    //     "persistent": true
+    // },
     "icons": {
         "16": "image/icon16.png",
         "32": "image/icon32.png",
