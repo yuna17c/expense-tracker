@@ -195,7 +195,7 @@ button, input {font-family: 'Hind', sans-serif;}
     color: white;
     border-bottom: 2px solid #575555;
     display: grid;
-    grid-template-columns: 6fr 9fr 2fr;
+    grid-template-columns: 7fr 9fr 2fr;
     font-size: 14px;
     height: 30px;
     font-family: "Hind", sans-serif;

@@ -7,10 +7,10 @@
         "default_title": "Expense Tracker",
         "default_popup": "popout.html"
     },
-    // "background": {
-    //     "page": "background.html",
-    //     "persistent": true
-    // },
+    "background": {
+        "page": "background.html",
+        "persistent": true
+    },
     "icons": {
         "16": "image/icon16.png",
         "32": "image/icon32.png",

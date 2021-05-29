@@ -99,11 +99,8 @@ document.querySelector('.new-item button').addEventListener('click', function() 
         let exist = false
         for (i=0; i < length; i++) {
             if (categoryArr[i] == category) {
-                console.log(itemName)
-                console.log(itemsArr[i].item)
                 let num = parseFloat(itemsArr[i].item) + parseFloat(itemName)
                 itemsArr[i].item = num
-                console.log(itemsArr[i])
                 saveItems(itemsArr);
                 exist = true
             }
@@ -178,6 +175,7 @@ function fetchItems() {
         } else {
             colorCode = '#4DAF7C';
         }
+        
         document.querySelector('.bar').style.borderColor=`${colorCode}`;
         document.querySelector('.bar').style.borderTop='none';
         document.querySelector('.semi-donut-model').style.color=`${colorCode}`;
