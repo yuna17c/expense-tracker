@@ -100,7 +100,7 @@ document.querySelector('.new-item button').addEventListener('click', function() 
         for (i=0; i < length; i++) {
             if (categoryArr[i] == category) {
                 let num = parseFloat(itemsArr[i].item) + parseFloat(itemName)
-                itemsArr[i].item = num
+                itemsArr[i].item = num.toFixed(2)
                 saveItems(itemsArr);
                 exist = true
             }
