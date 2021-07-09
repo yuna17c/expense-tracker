@@ -182,7 +182,7 @@ button, input {font-family: 'Hind', sans-serif;}
 /* list of expenses */
 .content,
 .content li {
-    padding: 0;
+    padding: 0; 
     margin: 0;
     letter-spacing: 1.1px;
     font-size: 13px;
