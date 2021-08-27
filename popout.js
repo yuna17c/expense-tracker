@@ -26,54 +26,6 @@ document.querySelector('.x_sign').addEventListener('click', function(){
     document.querySelector('.x_sign').style.display='none';
 });
 
-// // edit the date
-// document.querySelector('.date').addEventListener('click', function(){
-//     document.querySelector('.new-date').style.display='block';
-//     let date = localStorage.getItem('date');
-//     let dateVal = JSON.parse(date);
-//     const dateText = document.querySelector('.date');
-//     dateText.innerHTML=`<input class="new-date" type ="text" value=${dateVal} id="newDate">`;
-// });
-
-// // complete editing the date when enter is pressed
-// document.getElementById("newDate").addEventListener("keydown",function(event) {
-//     if (event.keyCode == 13){
-//         let date = document.querySelector('.dateContainer input').value;
-//         if (date != '') {
-//             changeDate();
-//         } else {
-//             alert("Please enter a budget starting date.")
-//         }
-//     }
-// }, false);
-
-// // complete editing the date when outside the box is clicked
-// window.addEventListener('click', function(e){   
-//     if (document.getElementById('date-container').contains(e.target)){
-//       // Clicked in box
-//     } else{
-//         let date = document.querySelector('.dateContainer input').value;
-//         let dateStorage = localStorage.getItem('date');
-//         let dateVal = JSON.parse(dateStorage);
-//         console.log("real date", dateVal)
-//         console.log(date)
-//         if (date != '') {
-//             changeDate();
-//         } else if (date != "") {
-//             alert("Please enter a budget starting date.")
-//         }
-//     }
-//   });
-
-// // change the date
-// function changeDate(){
-//     let date = document.querySelector('.dateContainer input').value;
-//     document.querySelector('.new-date').style.display='none';
-//     const dateText = document.querySelector('.date');
-//     saveDate(date);
-//     dateText.innerHTML=date;
-// }
-
 // change the budget
 document.querySelector('.add-budget').addEventListener('click', function(){
     document.querySelector('.new-budget').style.display='none';
