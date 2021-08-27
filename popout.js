@@ -26,50 +26,53 @@ document.querySelector('.x_sign').addEventListener('click', function(){
     document.querySelector('.x_sign').style.display='none';
 });
 
-// edit the date
-document.querySelector('.date').addEventListener('click', function(){
-    document.querySelector('.new-date').style.display='block';
-    let date = localStorage.getItem('date');
-    let dateVal = JSON.parse(date);
-    const dateText = document.querySelector('.date');
-    dateText.innerHTML=`<input class="new-date" type ="text" value=${dateVal} id="newDate">`;
-});
+// // edit the date
+// document.querySelector('.date').addEventListener('click', function(){
+//     document.querySelector('.new-date').style.display='block';
+//     let date = localStorage.getItem('date');
+//     let dateVal = JSON.parse(date);
+//     const dateText = document.querySelector('.date');
+//     dateText.innerHTML=`<input class="new-date" type ="text" value=${dateVal} id="newDate">`;
+// });
 
-// complete editing the date when enter is pressed
-document.getElementById("newDate").addEventListener("keydown",function(event) {
-    if (event.keyCode == 13){
-        let date = document.querySelector('.dateContainer input').value;
-        if (date != '') {
-            changeDate();
-        } else {
-            alert("Please enter a budget starting date.")
-        }
-    
-    }
-}, false);
+// // complete editing the date when enter is pressed
+// document.getElementById("newDate").addEventListener("keydown",function(event) {
+//     if (event.keyCode == 13){
+//         let date = document.querySelector('.dateContainer input').value;
+//         if (date != '') {
+//             changeDate();
+//         } else {
+//             alert("Please enter a budget starting date.")
+//         }
+//     }
+// }, false);
 
-// complete editing the date when outside the box is clicked
-window.addEventListener('click', function(e){   
-    if (document.getElementById('date-container').contains(e.target)){
-      // Clicked in box
-    } else{
-        let date = document.querySelector('.dateContainer input').value;
-        if (date != '') {
-            changeDate();
-        } else {
-            alert("Please enter a budget starting date.")
-        }
-    }
-  });
+// // complete editing the date when outside the box is clicked
+// window.addEventListener('click', function(e){   
+//     if (document.getElementById('date-container').contains(e.target)){
+//       // Clicked in box
+//     } else{
+//         let date = document.querySelector('.dateContainer input').value;
+//         let dateStorage = localStorage.getItem('date');
+//         let dateVal = JSON.parse(dateStorage);
+//         console.log("real date", dateVal)
+//         console.log(date)
+//         if (date != '') {
+//             changeDate();
+//         } else if (date != "") {
+//             alert("Please enter a budget starting date.")
+//         }
+//     }
+//   });
 
-// change the date
-function changeDate(){
-    let date = document.querySelector('.dateContainer input').value;
-    document.querySelector('.new-date').style.display='none';
-    const dateText = document.querySelector('.date');
-    saveDate(date);
-    dateText.innerHTML=date;
-}
+// // change the date
+// function changeDate(){
+//     let date = document.querySelector('.dateContainer input').value;
+//     document.querySelector('.new-date').style.display='none';
+//     const dateText = document.querySelector('.date');
+//     saveDate(date);
+//     dateText.innerHTML=date;
+// }
 
 // change the budget
 document.querySelector('.add-budget').addEventListener('click', function(){
@@ -95,18 +98,24 @@ document.querySelector('.new-item button').addEventListener('click', function() 
     let itemsStorage = localStorage.getItem('content');
     let itemsArr = JSON.parse(itemsStorage);
     if (itemName != '' && !isNaN(itemName)) {
-        let length = categoryArr.length
         let exist = false
-        for (i=0; i < length; i++) {
-            if (categoryArr[i] == category) {
-                let num = parseFloat(itemsArr[i].item) + parseFloat(itemName)
-                itemsArr[i].item = num.toFixed(2)
-                saveItems(itemsArr);
-                exist = true
-            }
-        };
+        if (categoryArr != null) {
+            let length = categoryArr.length
+            for (i=0; i < length; i++) {
+                if (categoryArr[i] == category) {
+                    let num = parseFloat(itemsArr[i].item) + parseFloat(itemName)
+                    itemsArr[i].item = num.toFixed(2)
+                    saveItems(itemsArr);
+                    exist = true
+                }
+            };
+        }
         if (exist == false) {
             // add to the expense list
+            if (itemsArr == null) {
+                itemsArr = []
+                categoryArr = []
+            }
             itemsArr.unshift({"item": itemName, "status":0});
             saveItems(itemsArr);
             
@@ -139,29 +148,35 @@ function fetchItems() {
         let itemsArr = JSON.parse(items);
         let categories = localStorage.getItem('category');
         let categoriesArr = JSON.parse(categories);
-        let date = localStorage.getItem('date');
-        let dateVal = JSON.parse(date);
+        let today = new Date();
+        const yyyy = today.getFullYear();
+        const month = today.toLocaleString('default', { month: 'long' });
+        today = month + " " + yyyy;
+        dateText.innerHTML=today
         let budgetStorage = localStorage.getItem('budget');
         let budget = JSON.parse(budgetStorage);
-        let sum = 0;
-        for (var i=0; i<itemsArr.length;i++) {
-            sum += parseFloat(itemsArr[i].item);    // calculate the sum
-            let status ='';
-            if(itemsArr[i].status == 1) {
-                status = 'class="done"';
-            }
-            newItemHTML += `<li data-itemindex="${i}" ${status}>
-            <div class="item">$ ${itemsArr[i].item}</div>
-            <div class="itemCat">${categoriesArr[i]}</div>
-            <div class="itemDelete"><img src="image/garbage.png"></div>
-            </li>`;
+        budgetText.innerHTML=budget;
+        if (budget == null) {
+            budgetText.innerHTML="Set a budget";
         }
-
+        let sum = 0;
+        if (itemsArr != null) {
+            for (var i=0; i<itemsArr.length;i++) {
+                sum += parseFloat(itemsArr[i].item);    // calculate the sum
+                let status ='';
+                if(itemsArr[i].status == 1) {
+                    status = 'class="done"';
+                }
+                newItemHTML += `<li data-itemindex="${i}" ${status}>
+                <div class="item">$ ${itemsArr[i].item}</div>
+                <div class="itemCat">${categoriesArr[i]}</div>
+                <div class="itemDelete"><img src="image/garbage.png"></div>
+                </li>`;
+            }
+        }
         // display the texts responsive
         itemsList.innerHTML=newItemHTML;
         spendingText.innerHTML="$" + sum.toString();
-        budgetText.innerHTML=budget;
-        dateText.innerHTML=dateVal;
 
         // change the filled percentage & color of the donut chart
         let piPercent = 180 * sum / budget;
@@ -207,11 +222,6 @@ function saveBudget(obj) {
 function saveCategory(obj) {
     let string = JSON.stringify(obj);
     localStorage.setItem('category', string);
-}
-
-function saveDate(obj) {
-    let string = JSON.stringify(obj);
-    localStorage.setItem('date', string);
 }
 
 function itemDelete(index) {
